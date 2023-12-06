@@ -12,7 +12,7 @@ A comprehensive list of AI-powered bots, each specialized in a different domain.
 - **[JavaScript Bot 1.10](https://chat.openai.com/g/g-38aOr4N7B-javascript-bot-1-10)**
 - **[Python Bot 1.10](https://chat.openai.com/g/g-38aOr4N7B-javascript-bot-1-10)** 
 - **[Swift Bot 1.10](https://chat.openai.com/g/g-8Wk0lfhWN-swift-bot-1-10)**
-- **[iFrame Bot 1.10]('https://chat.openai.com/g/g-aVV7IulxV-iframe-bot-1-10)**
+- **[iFrame Bot 1.10](https://chat.openai.com/g/g-aVV7IulxV-iframe-bot-1-10)**
 
 ## Media Handling Bots
 - **[Audio Bot 1.10](https://chat.openai.com/g/g-KcceBEg1a-audio-bot-1-10)**
