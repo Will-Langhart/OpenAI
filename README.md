@@ -31,3 +31,5 @@ A comprehensive list of AI-powered bots, each specialized in a different domain.
 - **[scienceX](https://chat.openai.com/g/g-b23IMyWIG-sciencex)**
 - **[historyX](https://chat.openai.com/g/g-CorWeq0is-historyx)**
 - **[englishX](https://chat.openai.com/g/g-ShAKsPy4K-englishx)**
+
+Business, eCommerce, Software, Personal and Student Tools, Solutions and AI at (https://friz-ai.com)
