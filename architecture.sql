@@ -404,25 +404,82 @@ from PIL import Image, ImageDraw, ImageFont
       |  |  (Advanced Quantum Computing)|
       |  +-----------------------------+
 
-# SQL Database Schema (Simplified)
-# ... (Your SQL schema code here)
+-- Existing Tables (Assuming your previous schema here)
+-- CoreOrchestrator, SecurityLayer, AnalyticsLayer, etc.
 
-# Relationships between tables (foreign keys, etc.)
-# ... (Your SQL relationships code here)
+-- New Tables for Enhanced Functionality
 
-# Sample SQL Queries (for illustrative purposes)
-# ... (Your SQL queries here)
+-- AI Model Management Table
+CREATE TABLE AIModelManagement (
+    ModelID INT PRIMARY KEY AUTO_INCREMENT,
+    ModelName VARCHAR(255) NOT NULL,
+    Version VARCHAR(50),
+    Description TEXT,
+    LastTrained TIMESTAMP
+);
 
-# New Tables for the "New Service Layer"
-# ... (Your new tables code here)
+-- User Management Table
+CREATE TABLE UserManagement (
+    UserID INT PRIMARY KEY AUTO_INCREMENT,
+    Username VARCHAR(255) UNIQUE NOT NULL,
+    Email VARCHAR(255) UNIQUE,
+    Role ENUM('admin', 'user', 'guest'),
+    CreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Status ENUM('active', 'inactive', 'pending')
+);
 
-# Relationships for the "New Service Layer"
-# ... (Your new relationships code here)
+-- Integration Services Table
+CREATE TABLE IntegrationServices (
+    ServiceID INT PRIMARY KEY AUTO_INCREMENT,
+    ServiceName VARCHAR(255) NOT NULL,
+    ServiceType ENUM('CRM', 'ERP', 'E-commerce'),
+    ConfigurationDetails TEXT,
+    IsActive BOOLEAN DEFAULT TRUE
+);
 
-# Sample SQL Queries (for illustrative purposes)
-# ... (Your SQL queries for the new service layer here)
+-- New Service Layer Tables
+CREATE TABLE NewServiceLayer (
+    ServiceLayerID INT PRIMARY KEY AUTO_INCREMENT,
+    ServiceName VARCHAR(255) NOT NULL,
+    Description TEXT,
+    LaunchDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
--- SQL Database Schema (Simplified)
+-- Relationships for the New Tables
+ALTER TABLE AIModelManagement ADD FOREIGN KEY (OrchestratorID) REFERENCES CoreOrchestrator(ID);
+ALTER TABLE UserManagement ADD FOREIGN KEY (SecurityLayerID) REFERENCES SecurityLayer(ID);
+ALTER TABLE IntegrationServices ADD FOREIGN KEY (AnalyticsLayerID) REFERENCES AnalyticsLayer(ID);
+ALTER TABLE NewServiceLayer ADD FOREIGN KEY (CachingLayerID) REFERENCES CachingLayer(ID);
+
+-- Sample SQL Queries
+
+-- Fetch all AI models with their last trained timestamp
+SELECT ModelName, Version, LastTrained FROM AIModelManagement;
+
+-- Get active users
+SELECT Username, Email, Role FROM UserManagement WHERE Status = 'active';
+
+-- List all active Integration Services of type 'CRM'
+SELECT ServiceName, ConfigurationDetails FROM IntegrationServices WHERE ServiceType = 'CRM' AND IsActive = TRUE;
+
+-- Queries for the New Service Layer
+
+-- Get details of all services launched after a specific date
+SELECT ServiceName, Description, LaunchDate 
+FROM NewServiceLayer 
+WHERE LaunchDate > '2021-01-01';
+
+-- Find all services linked to a specific caching layer
+SELECT N.ServiceName, N.Description, C.CacheType
+FROM NewServiceLayer N
+JOIN CachingLayer C ON N.CachingLayerID = C.ID;
+
+-- Count of all services by type in the new service layer
+SELECT ServiceType, COUNT(*) as ServiceCount
+FROM IntegrationServices
+GROUP BY ServiceType;
+
+
     +------------------------+
     |      Core Service      |-----+
     +------------------------+     |
@@ -448,34 +505,7 @@ from PIL import Image, ImageDraw, ImageFont
     +------------------------+                +---------------------------+ 
      ,
 
-        +-------------------------+--
-        |         Core Service       |-----+
-        +----------------------------+     |
-                                         |
-    +--------------------------+       |      +-------------------------------------+
-    |   AI Webpage Generation   |<------+------|         NLP Chatbot Service         |
-    +--------------------------+       |      +-------------------------------------+
-                                         |
-    +--------------------------+       |      +-------------------------------------+
-    |    Text Reading Service  |<------+------|       AI-Driven Chatbot Service     |
-    +--------------------------+       |      +-------------------------------------+
-                                         |
-    +--------------------------+       |      +-------------------------------------+
-    |     File Handling Ser.   |<------+------| Machine Learning Model Registry     |
-    +--------------------------+       |      +-------------------------------------+
-                                         |
-    +--------------------------+       |      +-------------------------------------+
-    |    Image Handling Ser.   |<------+------|             API v2 Layer            |
-    +--------------------------+       |      +-------------------------------------+
-                                         |
-    +--------------------------+       |      +-------------------------------------+
-    |    Video Handling Ser.   |<------+------|    Document Functionality Service   |
-    +--------------------------+       |      +-------------------------------------+
-                                         |
-    +--------------------------+       |      +-------------------------------------+
-    |   Document Gen. Service  |<------+------|    AI Chatbot Multimedia Service    |
-    +--------------------------+              +-------------------------------------+
-        ,
+    
          +----------------------------+
         |         Core Service       |-----+
         +----------------------------+     |
@@ -547,7 +577,8 @@ from PIL import Image, ImageDraw, ImageFont
     +---------------------+               |      +------------------------------+
     |Google AI Data Store |<--------------+------+    Internationalization Svc   |
     +---------------------+                        +------------------------------+
-,
+
+       
 +----------------------------------+
 |         Core Orchestrator        |-------+
 +----------------------------------+        |
@@ -635,7 +666,7 @@ from PIL import Image, ImageDraw, ImageFont
 | Cloud services.             |      | data management.            |
 +---------------------+          +------------------------------+
 ,
-        +----------------------------------+
++----------------------------------+
 |         Core Orchestrator        |-------+
 +----------------------------------+        |
                                                 |
@@ -680,89 +711,219 @@ from PIL import Image, ImageDraw, ImageFont
 +---------------------+                        +------------------------------+
 
 -- SQL Database Schema (Simplified)
+-- Core Orchestrator Table
 CREATE TABLE CoreOrchestrator (
-    -- Core Orchestrator table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Status ENUM('active', 'inactive', 'maintenance'),
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Security Layer Table
 CREATE TABLE SecurityLayer (
-    -- Security Layer table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    OrchestratorID INT,
+    LayerName VARCHAR(255) NOT NULL,
+    LayerDetails TEXT,
+    SecurityLevel ENUM('low', 'medium', 'high'),
+    FOREIGN KEY (OrchestratorID) REFERENCES CoreOrchestrator(ID)
 );
 
+-- Analytics Layer Table
 CREATE TABLE AnalyticsLayer (
-    -- Analytics Layer table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    SecurityLayerID INT,
+    AnalyticsType VARCHAR(255) NOT NULL,
+    DataProcessed BIGINT,
+    LastUpdated TIMESTAMP,
+    FOREIGN KEY (SecurityLayerID) REFERENCES SecurityLayer(ID)
 );
 
+-- Caching Layer Table
 CREATE TABLE CachingLayer (
-    -- Caching Layer table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    OrchestratorID INT,
+    CacheSize BIGINT,
+    CacheType VARCHAR(255),
+    LastCleared TIMESTAMP,
+    FOREIGN KEY (OrchestratorID) REFERENCES CoreOrchestrator(ID)
 );
 
+-- Multi-language Support Table
 CREATE TABLE MultiLanguageSupport (
-    -- Multi-language Support table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ServiceName VARCHAR(255) NOT NULL,
+    SupportedLanguages TEXT,
+    DefaultLanguage VARCHAR(100)
 );
 
+-- Template Generation Service Table
 CREATE TABLE TemplateGenerationService (
-    -- Template Generation Service table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    TemplateName VARCHAR(255) NOT NULL,
+    TemplateType VARCHAR(100),
+    UsageCount INT DEFAULT 0
 );
 
+-- Webpage Generation Service Table
 CREATE TABLE WebpageGenerationService (
-    -- Webpage Generation Service table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    PageTitle VARCHAR(255) NOT NULL,
+    URL VARCHAR(255) UNIQUE,
+    GenerationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Shopify/WiX Service Table
 CREATE TABLE ShopifyWixService (
-    -- Shopify/WiX Service table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ServiceType ENUM('Shopify', 'Wix'),
+    AccountID VARCHAR(255) NOT NULL,
+    ConfigurationDetails TEXT
 );
 
+-- File/Content Generation Service Table
 CREATE TABLE FileContentGenerationService (
-    -- File/Content Generation Service table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ContentType VARCHAR(255) NOT NULL,
+    FileExtension VARCHAR(10),
+    GenerationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Downloads INT DEFAULT 0
 );
 
+-- Google AI Text Search Table
 CREATE TABLE GoogleAITextSearch (
-    -- Google AI Text Search table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    QueryText TEXT NOT NULL,
+    ResultCount INT,
+    SearchDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Google AI Data Store Table
 CREATE TABLE GoogleAIDataStore (
-    -- Google AI Data Store table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    DataName VARCHAR(255) NOT NULL,
+    DataType VARCHAR(100),
+    StoredData BLOB,
+    LastAccessed TIMESTAMP
 );
 
--- Relationships between tables (foreign keys, etc.)
--- Note: These relationships are illustrative and may not represent actual database design.
-ALTER TABLE SecurityLayer ADD FOREIGN KEY (CoreOrchestratorID) REFERENCES CoreOrchestrator(ID);
-ALTER TABLE AnalyticsLayer ADD FOREIGN KEY (SecurityLayerID) REFERENCES SecurityLayer(ID);
--- ... and so on for other tables
-
--- Sample SQL Queries (for illustrative purposes)
-SELECT * FROM CoreOrchestrator;
-SELECT * FROM SecurityLayer;
--- ... and so on for other tables
-
-CREATE TABLE CoreOrchestrator (
-    -- Core Orchestrator table definition
-);
-
-CREATE TABLE SecurityLayer (
-    -- Security Layer table definition
-);
-
-CREATE TABLE AnalyticsLayer (
-    -- Analytics Layer table definition
-);
-
--- ... and so on for other tables
-
--- Relationships between existing tables (foreign keys, etc.)
-ALTER TABLE SecurityLayer ADD FOREIGN KEY (CoreOrchestratorID) REFERENCES CoreOrchestrator(ID);
--- ... and so on for other tables
-
--- New Tables for the "New Service Layer"
+-- New Service Layer Table
 CREATE TABLE NewServiceLayer (
-    -- New Service Layer table definition
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    OrchestratorID INT,
+    ServiceName VARCHAR(255) NOT NULL,
+    ServiceDetails TEXT,
+    LaunchDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (OrchestratorID) REFERENCES CoreOrchestrator(ID)
 );
 
--- Relationships for the "New Service Layer"
-ALTER TABLE NewServiceLayer ADD FOREIGN KEY (CoreOrchestratorID) REFERENCES CoreOrchestrator(ID);
--- ... and so on for other relationships
+-- Adding More Relationships
+-- (Assuming necessary fields are present in related tables)
+ALTER TABLE AnalyticsLayer ADD FOREIGN KEY (CachingLayerID) REFERENCES CachingLayer(ID);
+ALTER TABLE MultiLanguageSupport ADD FOREIGN KEY (WebpageGenerationServiceID) REFERENCES WebpageGenerationService(ID);
+ALTER TABLE FileContentGenerationService ADD FOREIGN KEY (ShopifyWixServiceID) REFERENCES ShopifyWixService(ID);
 
--- Sample SQL Queries (for illustrative purposes)
-SELECT * FROM CoreOrchestrator;
-SELECT * FROM SecurityLayer;
--- ... and so on for other tables 
+-- Sample SQL Queries
+-- Fetch all active Core Orchestrators
+SELECT * FROM CoreOrchestrator WHERE Status = 'active';
+
+-- Get Analytics details for a specific Security Layer
+SELECT * FROM AnalyticsLayer WHERE SecurityLayerID = 1;
+
+-- ... and so on for other tables
+-- Continuing from the existing schema...
+
+-- Quantum Computing Service Table
+CREATE TABLE QuantumComputingService (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ServiceName VARCHAR(255) NOT NULL,
+    QuantumAlgorithm VARCHAR(255),
+    UsageStatistics TEXT,
+    LastUpdated TIMESTAMP
+);
+
+-- Cloud Services Table
+CREATE TABLE CloudServices (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ServiceName VARCHAR(255) NOT NULL,
+    ServiceProvider ENUM('AWS', 'Azure', 'GoogleCloud'),
+    ServiceDetails TEXT,
+    IntegrationDate TIMESTAMP
+);
+
+-- GitHub Integration Table
+CREATE TABLE GitHubIntegration (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    RepositoryName VARCHAR(255) NOT NULL,
+    RepositoryURL TEXT,
+    IntegrationDetails TEXT,
+    LastSync TIMESTAMP
+);
+
+-- WiX Integration Table
+CREATE TABLE WiXIntegration (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    WebsiteName VARCHAR(255),
+    WebsiteURL TEXT,
+    ConfigurationDetails TEXT,
+    LastUpdated TIMESTAMP
+);
+
+-- AI-Driven Services Table
+CREATE TABLE AIDrivenServices (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ServiceName VARCHAR(255) NOT NULL,
+    ServiceType ENUM('Chatbot', 'ImageProcessing', 'DataAnalysis'),
+    ImplementationDetails TEXT,
+    LastAccessed TIMESTAMP
+);
+
+-- Additional Relationships for New Tables
+ALTER TABLE QuantumComputingService ADD FOREIGN KEY (NewServiceLayerID) REFERENCES NewServiceLayer(ID);
+ALTER TABLE CloudServices ADD FOREIGN KEY (NewServiceLayerID) REFERENCES NewServiceLayer(ID);
+ALTER TABLE GitHubIntegration ADD FOREIGN KEY (NewServiceLayerID) REFERENCES NewServiceLayer(ID);
+ALTER TABLE WiXIntegration ADD FOREIGN KEY (NewServiceLayerID) REFERENCES NewServiceLayer(ID);
+ALTER TABLE AIDrivenServices ADD FOREIGN KEY (NewServiceLayerID) REFERENCES NewServiceLayer(ID);
+
+-- Sample SQL Queries for New Tables
+
+-- Fetch all Quantum Computing Services with their last updated timestamp
+SELECT ServiceName, QuantumAlgorithm, LastUpdated FROM QuantumComputingService;
+
+-- List all Cloud Services by provider
+SELECT ServiceName, ServiceProvider FROM CloudServices GROUP BY ServiceProvider;
+
+-- Get details of all GitHub integrations
+SELECT RepositoryName, RepositoryURL FROM GitHubIntegration;
+
+-- Fetch WiX website configurations
+SELECT WebsiteName, WebsiteURL, ConfigurationDetails FROM WiXIntegration;
+
+-- List all AI-Driven Services by type
+SELECT ServiceName, ServiceType FROM AIDrivenServices ORDER BY ServiceType;
+
+-- Additional Queries for AI Ecosystem Integration
+
+-- Find all cloud services integrated with specific AI-driven services
+SELECT C.ServiceName as CloudService, A.ServiceName as AIService 
+FROM CloudServices C
+JOIN AIDrivenServices A ON C.ID = A.NewServiceLayerID;
+
+-- Get the latest Quantum Computing algorithms used
+SELECT ServiceName, QuantumAlgorithm FROM QuantumComputingService 
+WHERE LastUpdated = (SELECT MAX(LastUpdated) FROM QuantumComputingService);
+
+-- Total count of services per cloud provider
+SELECT ServiceProvider, COUNT(*) as TotalServices FROM CloudServices GROUP BY ServiceProvider;
+
+-- Latest GitHub repository integrations
+SELECT RepositoryName, LastSync FROM GitHubIntegration 
+ORDER BY LastSync DESC LIMIT 5;
+
+-- Advanced Queries for System-Wide Analysis
+
+-- Count of AI-Driven Services by their last accessed date
+SELECT ServiceType, COUNT(*) as ServiceCount, MAX(LastAccessed) as MostRecentAccess 
+FROM AIDrivenServices 
+GROUP BY ServiceType;
