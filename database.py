@@ -141,6 +141,16 @@ import seaborn as sns
 from tensorflow.keras.callbacks import EarlyStopping
 from hashlib import sha256
 import requests
+from mlflow import log_model, log_metric, log_param, start_run
+from textacy import make_spacy_doc
+from fastapi import FastAPI
+from joblib import dump, load
+from cloudant.client import Cloudant
+from kafka import KafkaProducer, KafkaConsumer
+import cv2
+from skimage import feature
+import numpy as np
+import boto3
 
 # Integration of Your AI Model with Friz AI
 class FrizAI:
@@ -711,6 +721,72 @@ def handle_api_errors(error):
     }
     return jsonify(response), error.code
 
+# ML Model Versioning
+class ModelVersioning:
+    def log_model_version(self, model, params, metrics):
+        with start_run():
+            log_param("params", params)
+            log_metric("metrics", metrics)
+            log_model(model, "model")
+
+# NLP for Insights Extraction
+class NLPInsights:
+    def extract_insights(self, text, nlp_model):
+        doc = make_spacy_doc(text, lang=nlp_model)
+        return [(ent.text, ent.label_) for ent in doc.ents]
+
+# Deploy Models as APIs
+class ModelDeployment:
+    def deploy_model(self, model, model_name):
+        app = FastAPI()
+        
+        @app.get(f"/{model_name}/predict")
+        def predict(input_data: str):
+            # Model prediction logic here
+            return {"prediction": model.predict(input_data)}
+
+        return app
+
+# Cloud Storage and Computation
+class CloudIntegration:
+    def __init__(self, service_name, credentials):
+        self.client = Cloudant.iam(service_name, credentials)
+        self.client.connect()
+
+    def store_data_cloud(self, data, database_name):
+        db = self.client.create_database(database_name, throw_on_exists=False)
+        db.create_document(data)
+
+    def compute_in_cloud(self, compute_function, *args):
+        # Cloud-based computation logic
+        pass
+
+# Anomaly Detection in Data Streams
+class AnomalyDetection:
+    def detect_anomalies(self, data_stream):
+        consumer = KafkaConsumer(data_stream)
+        for message in consumer:
+            data = message.value
+            # Anomaly detection logic here
+
+# Advanced Image Processing
+class ImageProcessing:
+    def process_image(self, image_path):
+        image = cv2.imread(image_path)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        edges = feature.canny(gray)
+        return edges
+
+# AWS S3 Integration for Data Storage
+class S3Integration:
+    def __init__(self, access_key, secret_key, bucket_name):
+        self.s3 = boto3.client('s3', aws_access_key_id=access_key, aws_secret_access_key=secret_key)
+        self.bucket_name = bucket_name
+
+    def upload_file_to_s3(self, file_name):
+        with open(file_name, "rb") as data:
+            self.s3.upload_fileobj(data, self.bucket_name, file_name)
+
   if __name__ == "__main__":
 
 # Initialize all components
@@ -759,7 +835,13 @@ data_explorer = DataExplorer()
 model_trainer = ModelTrainer()
 blockchain_data_storage = BlockchainDataStorage()
 model_visualizer = ModelVisualizer()
-
+model_versioning = ModelVersioning()
+nlp_insights = NLPInsights()
+model_deployment = ModelDeployment()
+cloud_integration = CloudIntegration("service_name", "credentials")
+anomaly_detection = AnomalyDetection()
+image_processing = ImageProcessing()
+s3_integration = S3Integration("access_key", "secret_key", "bucket_name")
 
     # Setup user authentication
     user_auth.setup_login()
