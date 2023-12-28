@@ -2184,6 +2184,515 @@ document.addEventListener("DOMContentLoaded", function() {
     // Other initialization code...
 });
 
+// Code Repository Integration
+async function syncWithCodeRepository(repoUrl) {
+    try {
+        const code = editor.getValue();
+        await pushCodeToRepository(repoUrl, code);
+        displayStatusMessage('Code successfully pushed to repository.');
+    } catch (error) {
+        console.error("Repository Sync Error:", error.message);
+        displayStatusMessage('Error syncing with repository.');
+    }
+}
+
+async function pushCodeToRepository(url, code) {
+    // Simulated API call to push code to a repository
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: code })
+    });
+    return response.json();
+}
+
+function displayStatusMessage(message) {
+    const statusDiv = document.createElement('div');
+    statusDiv.textContent = message;
+    document.body.appendChild(statusDiv);
+}
+
+// Language Translation for Global Collaboration
+async function translateCode(language) {
+    const code = editor.getValue();
+    try {
+        const translatedCode = await fetchTranslatedCode(code, language);
+        editor.setValue(translatedCode);
+    } catch (error) {
+        console.error("Translation Error:", error.message);
+    }
+}
+
+async function fetchTranslatedCode(code, language) {
+    // Simulated API call for code translation
+    const response = await fetch('https://api.frizonai.com/translate_code', {
+        method: 'POST',
+        body: JSON.stringify({ code: code, language: language }),
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return response.json();
+}
+
+// Advanced Auto-Completion Using AI
+function enableAICompletion() {
+    editor.onKeyUp(async (event) => {
+        const codeFragment = editor.getModel().getValueInRange(editor.getSelection());
+        const suggestions = await fetchAICompletion(codeFragment);
+        displayAutoCompletion(suggestions);
+    });
+}
+
+async function fetchAICompletion(fragment) {
+    // API call for AI-based auto-completion suggestions
+    const response = await fetch('https://api.frizonai.com/auto_completion', {
+        method: 'POST',
+        body: JSON.stringify({ fragment: fragment }),
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return response.json();
+}
+
+function displayAutoCompletion(suggestions) {
+    // Display auto-completion suggestions in the UI
+}
+
+// Real-Time Performance Monitoring
+function monitorPerformance() {
+    const performanceData = getPerformanceMetrics();
+    displayPerformanceData(performanceData);
+}
+
+function getPerformanceMetrics() {
+    // Collect and return performance metrics
+    return {
+        memoryUsage: performance.memory.usedJSHeapSize,
+        cpuLoad: Math.random() * 100, // Simulated CPU load
+        networkLatency: Math.random() * 200 // Simulated network latency
+    };
+}
+
+function displayPerformanceData(data) {
+    // Display performance data in a dedicated UI section
+}
+
+// Code Snippet Sharing via Social Media
+function shareCodeSnippet() {
+    const code = editor.getValue();
+    const shareUrl = createShareableLink(code);
+    openSocialMediaDialog(shareUrl);
+}
+
+function createShareableLink(code) {
+    // Create a shareable link for the code snippet
+    return `https://share.code?snippet=${encodeURIComponent(code)}`;
+}
+
+function openSocialMediaDialog(url) {
+    // Open a dialog to share the link on social media platforms
+}
+
+// Voice-Controlled Code Editor
+function enableVoiceControl() {
+    const recognition = new SpeechRecognition();
+    recognition.onresult = function(event) {
+        const voiceCommand = event.results[0][0].transcript;
+        executeVoiceCommand(voiceCommand);
+    };
+    recognition.start();
+}
+
+function executeVoiceCommand(command) {
+    // Interpret and execute voice commands
+}
+
+// Cloud-Based Code Backup
+async function backupCodeToCloud() {
+    const code = editor.getValue();
+    try {
+        await sendCodeToCloudStorage(code);
+        displayStatusMessage('Code backup completed successfully.');
+    } catch (error) {
+        console.error("Cloud Backup Error:", error.message);
+        displayStatusMessage('Error during cloud backup.');
+    }
+}
+
+async function sendCodeToCloudStorage(code) {
+    // Simulated API call to backup code to cloud storage
+    const response = await fetch('https://api.frizonai.com/cloud_backup', {
+        method: 'POST',
+        body: JSON.stringify({ code: code }),
+        headers: { 'Content-Type': 'application/json' }
+    });
+    return response.json();
+}
+
+// Enhanced Error Handling and Debugging
+function enhancedErrorHandling() {
+    window.onerror = function(message, source, lineno, colno, error) {
+        console.error("Captured Error:", message, "at line:", lineno);
+        // Implement additional error handling logic
+    };
+}
+
+// Further Initialization and Event Binding
+document.addEventListener("DOMContentLoaded", function() {
+    enableAICompletion();
+    monitorPerformance();
+    enableVoiceControl();
+    enhancedErrorHandling();
+    // Other initialization code...
+});
+ // Collaborative Coding Environment
+function initCollaborativeEnvironment() {
+    const collaborationManager = new CollaborationManager(editor);
+    collaborationManager.onUpdate((updatedCode) => {
+        editor.getModel().setValue(updatedCode);
+    });
+}
+
+class CollaborationManager {
+    constructor(editor) {
+        this.editor = editor;
+        this.setupWebSocketConnection();
+    }
+
+    setupWebSocketConnection() {
+        this.socket = new WebSocket('wss://collaboration.server');
+        this.socket.onmessage = (event) => {
+            const { code } = JSON.parse(event.data);
+            this.handleCodeUpdate(code);
+        };
+    }
+
+    handleCodeUpdate(code) {
+        if (this.editor.getValue() !== code) {
+            this.editor.getModel().setValue(code);
+        }
+    }
+
+    onUpdate(callback) {
+        this.editor.onDidChangeModelContent(() => {
+            const code = this.editor.getValue();
+            this.socket.send(JSON.stringify({ code: code }));
+            callback(code);
+        });
+    }
+}
+
+// Code Quality Assurance
+function performCodeQualityCheck() {
+    const code = editor.getValue();
+    CodeQualityAssessor.assess(code, (report) => {
+        displayQualityReport(report);
+    });
+}
+
+class CodeQualityAssessor {
+    static assess(code, callback) {
+        // Simulate API call for code quality assessment
+        fetch('https://api.codequality.com/assess', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: code })
+        }).then(response => response.json())
+          .then(data => callback(data));
+    }
+}
+
+function displayQualityReport(report) {
+    // Logic to display the code quality report
+}
+
+// Dynamic Coding Environment Customization
+function customizeCodingEnvironment() {
+    const theme = getUserPreferredTheme();
+    const language = getUserPreferredLanguage();
+    applyUserPreferences(theme, language);
+}
+
+function getUserPreferredTheme() {
+    // Retrieve the user's preferred theme (e.g., light, dark)
+    return localStorage.getItem('preferredTheme') || 'light';
+}
+
+function getUserPreferredLanguage() {
+    // Retrieve the user's preferred programming language
+    return localStorage.getItem('preferredLanguage') || 'javascript';
+}
+
+function applyUserPreferences(theme, language) {
+    editor.setTheme(theme);
+    monaco.editor.setModelLanguage(editor.getModel(), language);
+}
+
+// Automated Code Refactoring
+function refactorCode() {
+    const code = editor.getValue();
+    CodeRefactor.performRefactoring(code, (refactoredCode) => {
+        editor.getModel().setValue(refactoredCode);
+    });
+}
+
+class CodeRefactor {
+    static performRefactoring(code, callback) {
+        // Simulate API call for code refactoring
+        fetch('https://api.coderefactor.com/refactor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: code })
+        }).then(response => response.json())
+          .then(data => callback(data.refactoredCode));
+    }
+}
+
+// Code Execution Sandbox
+function executeCodeInSandbox() {
+    const code = editor.getValue();
+    try {
+        SandboxExecutor.execute(code);
+    } catch (error) {
+        displayExecutionError(error.message);
+    }
+}
+
+class SandboxExecutor {
+    static execute(code) {
+        // Logic to safely execute code in a sandbox environment
+    }
+}
+
+// User Interface Enhancements
+function enhanceUserInterface() {
+    addDragAndDropSupport();
+    enhanceAccessibilityFeatures();
+}
+
+function addDragAndDropSupport() {
+    const dropZone = document.getElementById('codeDropZone');
+    dropZone.addEventListener('drop', handleFileDrop);
+}
+
+function handleFileDrop(event) {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    readFileContent(file, (content) => {
+        editor.getModel().setValue(content);
+    });
+}
+
+function readFileContent(file, callback) {
+    const reader = new FileReader();
+    reader.onload = (event) => callback(event.target.result);
+    reader.readAsText(file);
+}
+
+function enhanceAccessibilityFeatures() {
+    // Implement features for better accessibility (e.g., keyboard navigation, screen reader support)
+}
+
+// Interactive Tutorials Integration
+function integrateTutorials() {
+    const tutorialManager = new TutorialManager();
+    tutorialManager.loadTutorials();
+    tutorialManager.onSelectTutorial((tutorial) => {
+        startTutorial(tutorial);
+    });
+}
+
+class TutorialManager {
+    loadTutorials() {
+        // Fetch and display a list of interactive tutorials
+    }
+
+    onSelectTutorial(callback) {
+        // Handle tutorial selection and start the tutorial
+    }
+}
+
+function startTutorial(tutorial) {
+    // Logic to start and guide the user through the selected tutorial
+}
+
+// Further Initialization and Event Binding
+document.addEventListener("DOMContentLoaded", function() {
+    initCollaborativeEnvironment();
+    customizeCodingEnvironment();
+    enhanceUserInterface();
+    integrateTutorials();
+    // Other initialization code...
+});
+// AI-Driven Code Insights and Recommendations
+function provideCodeInsights() {
+    const code = editor.getValue();
+    AIAnalyzer.analyzeCodeForInsights(code, (insights) => {
+        displayCodeInsights(insights);
+    });
+}
+
+class AIAnalyzer {
+    static analyzeCodeForInsights(code, callback) {
+        // Simulated API call for AI-driven code insights
+        fetch('https://api.codeinsights.ai/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: code })
+        }).then(response => response.json())
+          .then(data => callback(data.insights));
+    }
+}
+
+function displayCodeInsights(insights) {
+    // Logic to display AI-driven insights and recommendations
+}
+
+// Version Control Integration
+function setupVersionControl() {
+    const vcs = new VersionControlSystem();
+    vcs.onCommit((commitMessage) => {
+        commitChanges(commitMessage);
+    });
+}
+
+class VersionControlSystem {
+    constructor() {
+        this.setupCommitListener();
+    }
+
+    setupCommitListener() {
+        const commitButton = document.getElementById('commitButton');
+        commitButton.addEventListener('click', () => {
+            const commitMessage = document.getElementById('commitMessage').value;
+            this.handleCommit(commitMessage);
+        });
+    }
+
+    handleCommit(commitMessage) {
+        // Logic to handle code commit
+    }
+
+    onCommit(callback) {
+        this.handleCommit = callback;
+    }
+}
+
+function commitChanges(commitMessage) {
+    const code = editor.getValue();
+    // Simulate version control commit logic
+}
+
+// Interactive Debugging Tools
+function initializeDebuggingTools() {
+    const debuggerTool = new DebuggerTool();
+    debuggerTool.onDebug((breakpoints) => {
+        executeDebuggingSession(breakpoints);
+    });
+}
+
+class DebuggerTool {
+    constructor() {
+        this.breakpoints = [];
+        this.setupBreakpointListener();
+    }
+
+    setupBreakpointListener() {
+        editor.onMouseDown((event) => {
+            const lineNumber = event.target.position.lineNumber;
+            this.toggleBreakpoint(lineNumber);
+        });
+    }
+
+    toggleBreakpoint(lineNumber) {
+        const index = this.breakpoints.indexOf(lineNumber);
+        if (index === -1) {
+            this.breakpoints.push(lineNumber);
+        } else {
+            this.breakpoints.splice(index, 1);
+        }
+    }
+
+    onDebug(callback) {
+        this.debugCallback = callback;
+    }
+}
+
+function executeDebuggingSession(breakpoints) {
+    const code = editor.getValue();
+    // Logic to start a debugging session with set breakpoints
+}
+
+// Code Snippet Library
+function initializeCodeSnippetLibrary() {
+    const snippetLibrary = new CodeSnippetLibrary();
+    snippetLibrary.loadSnippets();
+    snippetLibrary.onSelectSnippet((snippetCode) => {
+        insertSnippetIntoEditor(snippetCode);
+    });
+}
+
+class CodeSnippetLibrary {
+    loadSnippets() {
+        // Fetch and display a library of reusable code snippets
+    }
+
+    onSelectSnippet(callback) {
+        // Handle code snippet selection
+    }
+}
+
+function insertSnippetIntoEditor(snippetCode) {
+    const currentPosition = editor.getPosition();
+    editor.getModel().insertContent(snippetCode, currentPosition);
+}
+
+// Custom Theme and Syntax Highlighter
+function applyCustomThemeAndHighlighter() {
+    const themeSettings = getCustomThemeSettings();
+    const syntaxHighlighter = new SyntaxHighlighter();
+    editor.setTheme(themeSettings.themeName);
+    syntaxHighlighter.applyHighlightRules(themeSettings.rules);
+}
+
+function getCustomThemeSettings() {
+    // Retrieve custom theme settings
+    return {
+        themeName: 'myCustomTheme',
+        rules: [
+            // Custom syntax highlight rules
+        ]
+    };
+}
+
+class SyntaxHighlighter {
+    applyHighlightRules(rules) {
+        // Apply custom syntax highlighting based on provided rules
+    }
+}
+
+// User Feedback and Reporting
+function setupFeedbackSystem() {
+    const feedbackButton = document.getElementById('feedbackButton');
+    feedbackButton.addEventListener('click', () => {
+        const feedback = document.getElementById('feedbackInput').value;
+        submitUserFeedback(feedback);
+    });
+}
+
+function submitUserFeedback(feedback) {
+    // Logic to submit user feedback
+    console.log("User Feedback Submitted:", feedback);
+}
+
+// Further Initialization and Event Binding
+document.addEventListener("DOMContentLoaded", function() {
+    setupVersionControl();
+    initializeDebuggingTools();
+    initializeCodeSnippetLibrary();
+    applyCustomThemeAndHighlighter();
+    setupFeedbackSystem();
+    // Additional initialization code...
+});
+
                 
 // Script SRC's -->
 // Monaco Editor script 
