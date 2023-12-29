@@ -319,7 +319,7 @@ Enhanced AI Ecosystem Architecture (Continued)
       |  +-----------------------------+
       |
       | -+-----------------------------+
-      |  |     mathX                   |
+      |  |           mathX             |
       |  | (Advanced DevOps Automation)|
       |  +-----------------------------+
       |
@@ -342,3 +342,13 @@ Enhanced AI Ecosystem Architecture (Continued)
       |  |             scienceX              |
       |  | (Advanced Science K-12 Automation)|
       |  +-----------------------------------+
+        -+-----------------------------+
+      |  |         historyX            |
+      |  | (Science K-12 AI Assistant) |
+      |  +-----------------------------+
+      |
+        -+-----------------------------+
+      |  |           englishX          |
+      |  | (History k-12 AI Assistant) |
+      |  +-----------------------------+
+    
