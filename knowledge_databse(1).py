@@ -144,7 +144,7 @@ from bs4 import BeautifulSoup
 
 
 
-GPT Knowledge Database =  
+Friz AI Software Architecture =  
                       
 """
 Enhanced AI Ecosystem Architecture (Continued)
