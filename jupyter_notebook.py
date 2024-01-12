@@ -1,4 +1,4 @@
-Continuing the Jupyter notebook outline for each feature of friz-ai.com, with advanced commentary and hypothetical Python code snippets:
+in-text virtual sandboxed Jupyter notebook environmental and architectural outline for each GPT and feature of friz-ai.com, with advanced commentary and hypothetical Python code snippets:
 
 7. Intellectual Property and Copyright Management
 
