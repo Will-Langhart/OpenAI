@@ -143,7 +143,7 @@ def scrape_website(url):
         return f"An error occurred: {str(e)}"
 
 # Example usage
-url = "https://www.example.com"
+url = "http://127.0.0.1:5000/"
 titles = scrape_website(url)
 print("Titles found on the webpage:", titles)
 
