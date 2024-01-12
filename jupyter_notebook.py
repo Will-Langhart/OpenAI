@@ -5,12 +5,32 @@ Continuing the Jupyter notebook outline for each feature of friz-ai.com, with ad
 	•	Text Block: Discusses handling intellectual property and automated copyright management.
 	•	Code Block: Python example for detecting copyrighted text using regex or a simple machine learning model.
 
+# Python code snippet for detecting copyrighted text
+# Note: This is a basic example and might not cover all cases
+import re
+
+copyrighted_phrases = ["©", "All rights reserved", "Copyright"]
+
+def check_for_copyright(text):
+    for phrase in copyrighted_phrases:
+        if re.search(phrase, text):
+            return True
+    return False
+
 
 8. Financial Analysis and Fintech Solutions
 
 	•	Text Block: Overview of AI applications in financial analytics and fintech integrations.
 	•	Code Block: Demonstration of financial data analysis using Python’s pandas and numpy libraries.
+# Python code for basic financial data analysis
+import pandas as pd
+import numpy as np
 
+# Example: Loading and analyzing financial data
+financial_data = pd.read_csv('financial_data.csv')
+print(financial_data.describe())
+
+		
 9. Enhanced Human-AI Interaction
 
 	•	Text Block: Describes AI advancements in mimicking human interaction.
