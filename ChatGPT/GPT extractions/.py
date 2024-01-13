@@ -31,7 +31,11 @@ from flask import Flask, request, jsonify
 import textwrap
 from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
-
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask_mail import Mail, Message
+from some_external_module import analyze_python_code, analyze_javascript_code, send_analysis_report
+from database_utils import get_db_connection, insert_user, fetch_user, insert_analysis_job
 
 
 # AI Voice Generator
@@ -554,6 +558,62 @@ def generate_gpt_response(query, browser_results=None):
 if __name__ == '__main__':
     app.run(debug=True)
 
+# Books
+import random
+
+class BooksChatbot:
+    def __init__(self):
+        self.user_preferences = {'genre': 'general', 'mood': '', 'interests': []}
+        self.genre_recommendations = {
+            'classic': ["Pride and Prejudice", "1984", "To Kill a Mockingbird"],
+            'sci-fi': ["Dune", "The Martian", "Neuromancer"],
+            'fantasy': ["The Hobbit", "Harry Potter and the Sorcerer's Stone", "The Name of the Wind"],
+            'mystery': ["The Girl with the Dragon Tattoo", "And Then There Were None", "Gone Girl"],
+        }
+        self.trivia_questions = [
+            "Which author wrote the famous line, 'It was the best of times, it was the worst of times'?",
+            "What is the real name of the author George Orwell?",
+            "In which year was 'To Kill a Mockingbird' published?"
+        ]
+
+    def update_preferences(self, genre, mood, interests):
+        self.user_preferences = {'genre': genre, 'mood': mood, 'interests': interests}
+
+    def recommend_book(self):
+        genre = self.user_preferences['genre']
+        recommendations = self.genre_recommendations.get(genre, ["The Catcher in the Rye"])
+        recommended_book = random.choice(recommendations)
+
+        return f"I recommend '{recommended_book}'. A splendid choice for a {genre} genre enthusiast! Does this book meet your needs, or would you like me to recommend another?"
+
+    def literary_trivia(self):
+        question = random.choice(self.trivia_questions)
+        return question
+
+    def discuss_book(self, book_title):
+        # Enhanced discussion logic
+        discussions = {
+            "the great gatsby": "F. Scott Fitzgerald's 'The Great Gatsby' is a poignant exploration of the American Dream. What do you think about the character of Jay Gatsby?",
+            "1984": "'1984' by George Orwell presents a dystopian future. How do you interpret its message about surveillance and freedom?"
+        }
+        return discussions.get(book_title.lower(), "I don't have information on that book, but I'd love to hear your thoughts on it!")
+
+    def suggest_pairing(self, book_title):
+        pairings = {
+            "pride and prejudice": "A cup of tea and some scones would pair wonderfully with 'Pride and Prejudice'.",
+            "the martian": "How about some freeze-dried snacks while reading 'The Martian'? It'll feel like you're right there with the protagonist!"
+        }
+        return pairings.get(book_title.lower(), "I don't have a specific pairing for that book, but a cozy blanket and your favorite beverage always make for a great reading experience!")
+
+# Example of using the BooksChatbot
+books_bot = BooksChatbot()
+books_bot.update_preferences(genre='sci-fi', mood='adventurous', interests=['space', 'technology'])
+print(books_bot.recommend_book())
+print(books_bot.literary_trivia())
+print(books_bot.discuss_book("1984"))
+print(books_bot.suggest_pairing("The Martian"))
+
+
 #WebPilot 
 app = Flask(__name__)
 
@@ -1025,3 +1085,98 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Website Bot 
+
+# Initialize Flask App
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit file size to 16MB
+
+# Configure Mail
+app.config['MAIL_SERVER'] = 'smtp.example.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'your-email@example.com'
+app.config['MAIL_PASSWORD'] = 'your-password'
+mail = Mail(app)
+
+# Rate Limiter Configuration
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["200 per day", "50 per hour"]
+)
+
+# File Upload Endpoint
+@app.route('/upload', methods=['POST'])
+@limiter.limit("10 per hour")
+def upload_file():
+    file = request.files['file']
+    filename = secure_filename(file.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    file.save(file_path)
+    return jsonify({"message": "File uploaded successfully", "filepath": file_path})
+
+# User Registration Endpoint
+@app.route('/register', methods=['POST'])
+def register_user():
+    data = request.get_json()
+    username = data['username']
+    password = bcrypt.hashpw(data['password'].encode('utf-8'), bcrypt.gensalt())
+    
+    # Insert user into the database
+    success = insert_user(username, password)
+    if success:
+        return jsonify({"message": "User registered successfully"})
+    else:
+        return jsonify({"error": "Registration failed"}), 400
+
+# User Login Endpoint
+@app.route('/login', methods=['POST'])
+def login_user():
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+
+    user = fetch_user(username)
+    if user and bcrypt.checkpw(password.encode('utf-8'), user['password']):
+        token = jwt.encode({'username': username}, 'SECRET_KEY', algorithm='HS256')
+        return jsonify({"token": token})
+    else:
+        return jsonify({"error": "Invalid credentials"}), 401
+
+# Code Analysis Endpoint
+@app.route('/analyze', methods=['POST'])
+def analyze_code():
+    data = request.get_json()
+    code = data['code']
+    language = data['language']
+    user_id = data.get('user_id')
+
+    if language == 'python':
+        result = analyze_python_code(code)
+    elif language == 'javascript':
+        result = analyze_javascript_code(code)
+    else:
+        result = 'Unsupported language'
+
+    # Store the analysis job in the database
+    insert_analysis_job(user_id, code, language, result)
+
+    # Optional: Send analysis report via email
+    if user_id:
+        send_analysis_report(user_id, result)
+
+    return jsonify({"analysis_result": result})
+
+# Download File Endpoint
+@app.route('/download/<path:filename>', methods=['GET'])
+def download_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
+
+if
+name == 'main':
+app.run(debug=True)
+
+# Visuals Bot
