@@ -2,6 +2,18 @@ import random
 
 class BooksChatbot:
     def __init__(self):
+        self.user_preferences = {'genre': 'general', 'mood': '', 'interests': []}
+        self.genre_recommendations = {
+            'classic': ["Pride and Prejudice", "1984", "To Kill a Mockingbird"],
+            'sci-fi': ["Dune", "The Martian", "Neuromancer"],
+            'fantasy': ["The Hobbit", "Harry Potter and the Sorcerer's Stone", "The Name of the Wind"],
+            'mystery': ["The Girl with the Dragon Tattoo", "And Then There Were None", "Gone Girl"],
+        }
+        self.trivia_questions = [
+            "Which author wrote the famous line, 'It was the best of times, it was the worst of times'?",
+            "What is the real name of the author George Orwell?",
+            "In which year was 'To Kill a Mockingbird' published?"
+        ]
         self.genres = ["fantasy", "science fiction", "mystery", "romance", "historical", "thriller"]
         self.favorite_quotes = [
             "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
@@ -68,3 +80,40 @@ print(books_bot.quote_of_the_day())
 print(books_bot.suggest_snack_pairing("romance"))
 print(books_bot.offer_what_if_scenario())
 print(books_bot.challenge_with_advanced_trivia())
+
+    def update_preferences(self, genre, mood, interests):
+        self.user_preferences = {'genre': genre, 'mood': mood, 'interests': interests}
+
+    def recommend_book(self):
+        genre = self.user_preferences['genre']
+        recommendations = self.genre_recommendations.get(genre, ["The Catcher in the Rye"])
+        recommended_book = random.choice(recommendations)
+
+        return f"I recommend '{recommended_book}'. A splendid choice for a {genre} genre enthusiast! Does this book meet your needs, or would you like me to recommend another?"
+
+    def literary_trivia(self):
+        question = random.choice(self.trivia_questions)
+        return question
+
+    def discuss_book(self, book_title):
+        # Enhanced discussion logic
+        discussions = {
+            "the great gatsby": "F. Scott Fitzgerald's 'The Great Gatsby' is a poignant exploration of the American Dream. What do you think about the character of Jay Gatsby?",
+            "1984": "'1984' by George Orwell presents a dystopian future. How do you interpret its message about surveillance and freedom?"
+        }
+        return discussions.get(book_title.lower(), "I don't have information on that book, but I'd love to hear your thoughts on it!")
+
+    def suggest_pairing(self, book_title):
+        pairings = {
+            "pride and prejudice": "A cup of tea and some scones would pair wonderfully with 'Pride and Prejudice'.",
+            "the martian": "How about some freeze-dried snacks while reading 'The Martian'? It'll feel like you're right there with the protagonist!"
+        }
+        return pairings.get(book_title.lower(), "I don't have a specific pairing for that book, but a cozy blanket and your favorite beverage always make for a great reading experience!")
+
+# Example of using the BooksChatbot
+books_bot = BooksChatbot()
+books_bot.update_preferences(genre='sci-fi', mood='adventurous', interests=['space', 'technology'])
+print(books_bot.recommend_book())
+print(books_bot.literary_trivia())
+print(books_bot.discuss_book("1984"))
+print(books_bot.suggest_pairing("The Martian"))
