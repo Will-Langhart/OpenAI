@@ -1,85 +1,111 @@
-FrizAI_database:
+Friz_AI database:
   knowledge:
     - Python:
-      - filename: knowledge.py
-        description: Python scripts for knowledge enhancement
+      - filename: knowledge_database_A.py
+        description: Python scripts for knowledge enhancement and NML
         version: 1.0
-        author: Friz AI Team
-        last_updated: '2023-12-07'
+        author: FrizAI Team
+        last_updated: '2024-01-13'
         dependencies:
+          - openai/gpt-4
+          - openai/gpt-3
           - numpy
+          - jupyter notebook
+          - flask app
           - pandas
-      - filename: advanced_knowledge.py
-        description: Advanced Python scripts for knowledge enhancement
+      - filename: knowledge_database_B.py
+        description: Advanced Python scripts for knowledge enhancement and NML
         version: 2.0
-        author: Friz AI Team
-        last_updated: '2023-12-10'
+        author: FrizAI Team
+        last_updated: '2024-01-13'
         dependencies:
+          - openai/gpt-4
           - numpy
+          - dotnev
+          - jupyter notebook
+          - flask app
           - pandas
           - scikit-learn
     - JavaScript:
-      - filename: knowledge.js
+      - filename: bot.js
         description: JavaScript scripts for knowledge enhancement
         version: 1.0
-        author: Friz AI Team
-        last_updated: '2023-12-07'
+        author: FrizAI Team
+        last_updated: '2024-01-13'
         dependencies:
+          - openai/gpt-4
           - axios
           - lodash
   behavior:
     - Python:
-      - filename: behavior.py
+      - filename: behavior_database.sql
         description: Python scripts for behavior enhancement
         version: 1.0
-        author: Friz AI Team
-        last_updated: '2023-12-07'
+        author: FrizAI Team
+        last_updated: '2024-01-13'
         dependencies:
+          - openai/gpt-4
           - tensorflow
+          - SQL
           - keras
       - filename: advanced_behavior.py
         description: Advanced Python scripts for behavior enhancement
         version: 2.0
-        author: Friz AI Team
-        last_updated: '2023-12-10'
+        author: FrizAI Team
+        last_updated: '2024-01-13'
         dependencies:
           - tensorflow
           - keras
           - openai/gpt-3
+          - openai/gpt-4
     - JavaScript:
       - filename: behavior.js
         description: JavaScript scripts for behavior enhancement
         version: 1.0
-        author: Friz AI Team
-        last_updated: '2023-12-07'
+        author: FrizAI Team
+        last_updated: '2024-01-13'
         dependencies:
+          - openai/gpt-4
           - react
-          - redux
-  task:
-    - Python:
-      - filename: task.py
-        description: Python scripts for task management
+          - redux          
+    - yml :
+     - filename: database.yml
+        description: yml software for GPT and vnv/env behavior enhancement
         version: 1.0
-        author: Friz AI Team
-        last_updated: '2023-12-07'
+        author: FrizAI Team
+        last_updated: '2024-01-13'
+        dependencies:
+  task:
+   - Mathematica:
+      - filename: database.mathematica
+        description: Mathematica code for tasks, responses and fetching formulas for responses
+        version: 1.0
+        author: FrizAI Team
+        last_updated: '2024-01-13'
+    - Python:
+      - filename: jupyterNotebook_env.py
+        description: Sandboxed virtual environment for in-chat coding with Python, JavaScript, HTML, JSON and CSS
+        version: 1.0
+        author: FrizAI Team
+        last_updated: '2024-01-13'
       - filename: advanced_task.py
         description: Advanced Python scripts for task management
         version: 2.0
-        author: Friz AI Team
-        last_updated: '2023-12-10'
+        author: FrizAI Team
+        last_updated: '2024-01-13'
     - JavaScript:
       - filename: task.js
         description: JavaScript scripts for task management
         version: 1.0
-        author: Friz AI Team
-        last_updated: '2023-12-07'
+        author: FrizAI Team
+        last_updated: '2024-01-13'
   generations:
     - Python:
       - filename: generations.py
         description: Python scripts for generation enhancements
         version: 1.0
         author: Friz AI Team
-        last_updated: '2023-12-07'
+        last_updated: '2024-01-13'
       - filename: advanced_generations.py
         description: Advanced Python scripts for generation enhancements
         version: 2.0
