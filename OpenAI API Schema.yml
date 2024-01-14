@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: Combined ChatGPT and OpenAI API
+  description: API for interacting with both ChatGPT-like service and OpenAI services.
+  version: 1.0.0
+servers:
+  - url: https://api.chatgpt.com/v1
+    description: Production server (uses live data)
+paths:
+  /chat:
+    post:
+      summary: Send a message to ChatGPT
+      operationId: sendToChatGPT
+      tags:
+        - ChatGPT
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Text message to send to ChatGPT.
+      responses:
+        "200":
+          description: A successful response from ChatGPT.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    description: ChatGPT's response to the input message.
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /engines/davinci-codex/completions:
+    post:
+      summary: Generates text completions for a given prompt
+      operationId: textCompletion
+      tags:
+        - OpenAI
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: Text prompt for text completion.
+      responses:
+        "200":
+          description: A successful response with text completions.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  completions:
+                    type: string
+                    description: Generated text completions.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message describing the problem.
+security:
+  - bearerAuth: []
