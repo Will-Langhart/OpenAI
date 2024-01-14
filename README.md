@@ -7,12 +7,6 @@ A comprehensive list of AI-powered bots, each specialized in a different domain.
 - **[🎬 Thriller Movie Suggestions](https://chat.openai.com/g/g-wqfSE3t2E-thriller-movie-suggestions)**
 - **[ChadGPT](https://chat.openai.com/g/g-nnhXz9cG3-chadgpt)**
 
-## Other
-- **[Audio Bot](https://chat.openai.com/g/g-yDTEuJp6u-audio-bot)**
-- **[PulseAI](https://chat.openai.com/g/g-2JkpYOv1k-pulseai)**
-- **[FusionAI](https://chat.openai.com/g/g-nWyUBKFQV-fusionai)**
-- **[Data Bot](https://chat.openai.com/g/g-CLaI7BZ3K-data-bot)**
-
 ## Programming
 - **[Quantum NML Bot](https://chat.openai.com/g/g-KcceBEg1a-quantum-nml-bot)**
 - **[API Bot](https://chat.openai.com/g/g-b23IMyWIG-api-bot)**
@@ -44,4 +38,9 @@ A comprehensive list of AI-powered bots, each specialized in a different domain.
 - **[historyX](https://chat.openai.com/g/g-CorWeq0is-historyx)**
 - **[englishX](https://chat.openai.com/g/g-ShAKsPy4K-englishx)**
 
-Business, eCommerce, Software, Personal and Student Tools, Solutions and AI at https://friz-ai.com
+  ## Other
+- **[Audio Bot](https://chat.openai.com/g/g-yDTEuJp6u-audio-bot)**
+- **[PulseAI](https://chat.openai.com/g/g-2JkpYOv1k-pulseai)**
+- **[FusionAI](https://chat.openai.com/g/g-nWyUBKFQV-fusionai)**
+- **[Data Bot](https://chat.openai.com/g/g-CLaI7BZ3K-data-bot)**
+
