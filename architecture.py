@@ -222,6 +222,7 @@ FrizAI ~ Virtual Software Architectural Environment =
       |  |        FrizAI GPTs:           |
       |  |  +--------------------------+ |
       |  |  |          File Bot        | |
+      
       |  |  +--------------------------+ |
       |  |  |         Image Bot        | |
       |  |  +--------------------------+ |
