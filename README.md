@@ -4,8 +4,8 @@ A comprehensive list of AI-powered bots, each specialized in a different domain.
 
 ## General Purpose Bots
 - **[FrizGPT](https://chat.openai.com/g/g-uR3SXTMg5-frizgpt)**: A versatile bot tailored for diverse interactions.
-- **[🎬 Thriller Movie Suggestions](https://chat.openai.com/g/g-wqfSE3t2E-thriller-movie-suggestions)**
 - **[ChadGPT](https://chat.openai.com/g/g-nnhXz9cG3-chadgpt)**
+- **[🎬 Thriller Movie Suggestions](https://chat.openai.com/g/g-wqfSE3t2E-thriller-movie-suggestions)**
 
 ## Programming
 - **[Quantum NML Bot](https://chat.openai.com/g/g-KcceBEg1a-quantum-nml-bot)**
