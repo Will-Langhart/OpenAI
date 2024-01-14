@@ -149,12 +149,12 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from PIL import Image, ImageDraw, ImageFont
 
-+-----------------------------------------------------------------------------------------------------------+
-| Friz AI Quantum NML Extended & Advanced Architecture with GPT, Quantum, Cloud, GitHub & WiX Integrations  |
-+-----------------------------------------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------------------------------+
+| FrizAI Quantum NML Extended & Advanced Architecture with GPT, Quantum, Cloud, GitHub & Virtual Integrations |
++-------------------------------------------------------------------------------------------------------------+
 |                                                                                                         |
 | +--------------+    +----------------+    +----------+    +---------------------+   +--------+   +-----+|
-| |   Front-End  | -> | API & Services | -> |  AI Core | -> | Quantum Processing | ->|  Cloud | ->| WiX | |
+| |   Front-End  | -> | API & Services | -> |  AI Core | -> | Quantum Processing | ->|  Cloud | ->| venv  | 
 | +--------------+    +----------------+    +----------+    +---------------------+   +--------+   +-----+|
 |    |    ^                    |                |                   |                 |         |         |
 |    |    |                    V                |                   |                 |         |         |
@@ -194,11 +194,11 @@ from PIL import Image, ImageDraw, ImageFont
 | +---------------+             |                                         |         |                   |
 |        |                      V                                         |         |                   |
 |        V              +-------------------+                             |         |                   |
-| +---------------+    | eCommerce Services |                             |         |                   |
+| +---------------+    | coding Services    |                             |         |                   |
 | | Content Types |    +-------------------+                              |         |                   |
 | +---------------+             |                                         |         |                   |
 |        |                      V                                         |         |                   |
-|        V              +-------------------+                             |         |                   |
+|        V             +-------------------+                              |         |                   |
 | +---------------+    | Business Services  |                             |         |                   |
 | |   Workflows   |    +-------------------+                              |         |                   |
 | +---------------+                                                       |         |                   |
@@ -207,13 +207,13 @@ from PIL import Image, ImageDraw, ImageFont
 |  +----------------+                                                     |         |                   |
 |  | GPT Integrations|                                                    |         |                   |
 |  +----------------+                                                     |         |                   |
-|  | Server Bot 1.10     | eCommerce Bot 1.10 | App Bot 1.10 |            |         |                   |
-|  | Image Bot 1.10      | Audio Bot 1.10    | Codebot 1.10 |             |         |                   | 
-|  | FrizGPT             | englishX          | scienceX     |             |         |                   |
-|  | historyX            | File Bot 1.10     | Website Bot 1.10 |         |         |                   |
-|  | iFrame Bot 1.10     | JavaScript Bot 1.10 | HTML Bot 1.10 |          |         |                   |
-|  | Video Bot 1.10      | Python Bot 1.10   | Swift Bot 1.10 |           |         |                   |
-|  | Visual Bot 1.10     | SEO Bot 1.10      | mathX         |            |         |                   |
+|  | Server Bot          | eCommerce Bot      | App Bot     |             |         |                   |
+|  | Image Bot           | Audio Bot          | Codebot     |             |         |                   | 
+|  | FrizGPT             | englishX           | scienceX    |             |         |                   |
+|  | historyX            | File Bot           | Website Bot |             |         |                   |
+|  | iFrame Bot          | JavaScript Bot     | HTML Bot    |             |         |                   |
+|  | Video Bot           | Python Bot         | Swift Bot   |             |         |                   |
+|  | Visual Bot          | SEO Bot            | mathX       |             |         |                   |
 |  | Quantum Analytics Bot | Quantum Modeling Bot | Quantum Security Bot  |         |                   |
 |  +----------------+                                                     |         |                   |
 |  | Cloud Services Integration | Edge Computing Bots |                   |         |                   |
